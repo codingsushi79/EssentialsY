@@ -11,6 +11,9 @@ on:
     types:
       - published
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build and upload
@@ -37,6 +40,63 @@ jobs:
           chmod +x gradlew
           ./gradlew :EssentialsY:build -x test --stacktrace
 
+      - name: Resolve version
+        id: version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_NAME: ${{ github.event.release.name }}
+          RELEASE_BODY: ${{ github.event.release.body }}
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            VERSION="${RELEASE_TAG#v}"
+            TAG="$RELEASE_TAG"
+            NAME="$RELEASE_NAME"
+            CHANNEL="release"
+            PRERELEASE=false
+          else
+            SHORT_SHA="${GITHUB_SHA:0:7}"
+            VERSION="1.0.0-dev.${{ github.run_number }}.g${SHORT_SHA}"
+            TAG="v${VERSION}"
+            NAME="EssentialsY ${VERSION}"
+            CHANNEL="alpha"
+            PRERELEASE=true
+          fi
+
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "name=${NAME}" >> "$GITHUB_OUTPUT"
+          echo "channel=${CHANNEL}" >> "$GITHUB_OUTPUT"
+          echo "prerelease=${PRERELEASE}" >> "$GITHUB_OUTPUT"
+
+          if [ "${{ github.event_name }}" = "release" ]; then
+            CHANGELOG="$RELEASE_BODY"
+          else
+            CHANGELOG="Automated dev build from commit ${GITHUB_SHA}"
+          fi
+          {
+            echo "changelog<<EOF"
+            printf '%s\n' "$CHANGELOG"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub release
+        if: github.event_name != 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ steps.version.outputs.name }}
+          body: ${{ steps.version.outputs.changelog }}
+          prerelease: ${{ steps.version.outputs.prerelease }}
+          generate_release_notes: true
+          files: jars/EssentialsY-*.jar
+
+      - name: Upload jar to existing GitHub release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: jars/EssentialsY-*.jar
+
       - name: Archive plugin jar
         uses: actions/upload-artifact@v7
         with:
@@ -50,22 +110,15 @@ jobs:
           path: jars/EssentialsY-*.jar
           archive: false
 
-      - name: Resolve release version
-        if: github.event_name == 'release'
-        id: release
-        run: |
-          VERSION="${{ github.event.release.tag_name }}"
-          echo "version=${VERSION#v}" >> "$GITHUB_OUTPUT"
-
       - name: Publish to Modrinth
-        if: github.event_name == 'release'
         uses: cloudnode-pro/modrinth-publish@v2
         with:
           token: ${{ secrets.MODRINTH_TOKEN }}
           project: ${{ vars.MODRINTH_PROJECT_ID }}
-          name: ${{ github.event.release.name }}
-          version: ${{ steps.release.outputs.version }}
-          changelog: ${{ github.event.release.body }}
+          name: ${{ steps.version.outputs.name }}
+          version: ${{ steps.version.outputs.version }}
+          changelog: ${{ steps.version.outputs.changelog }}
+          status: ${{ steps.version.outputs.channel }}
           loaders: |-
             paper
             spigot
