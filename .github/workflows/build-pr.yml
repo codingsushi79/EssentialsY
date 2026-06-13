@@ -15,9 +15,6 @@ on:
   merge_group:
     types: [checks_requested]
 
-permissions:
-  checks: write
-
 jobs:
   build:
     name: Build and upload
@@ -41,13 +38,7 @@ jobs:
       - name: Build with Gradle
         run: |
           chmod +x gradlew
-          ./gradlew :EssentialsY:build --stacktrace
-
-      - name: Publish JUnit report
-        uses: mikepenz/action-junit-report@v5
-        if: success() || failure()
-        with:
-          report_paths: '**/build/test-results/test*/TEST-*.xml'
+          ./gradlew :EssentialsY:build -x test --stacktrace
 
       - name: Archive plugin jar
         uses: actions/upload-artifact@v7

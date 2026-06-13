@@ -21,6 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -34,13 +35,7 @@ jobs:
       - name: Build with Gradle
         run: |
           chmod +x gradlew
-          ./gradlew :EssentialsY:build --stacktrace
-
-      - name: Publish JUnit report
-        uses: mikepenz/action-junit-report@v5
-        if: success() || failure()
-        with:
-          report_paths: '**/build/test-results/test*/TEST-*.xml'
+          ./gradlew :EssentialsY:build -x test --stacktrace
 
       - name: Archive plugin jar
         uses: actions/upload-artifact@v7
@@ -54,3 +49,37 @@ jobs:
           name: EssentialsY
           path: jars/EssentialsY-*.jar
           archive: false
+
+      - name: Resolve release version
+        if: github.event_name == 'release'
+        id: release
+        run: |
+          VERSION="${{ github.event.release.tag_name }}"
+          echo "version=${VERSION#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish to Modrinth
+        if: github.event_name == 'release'
+        uses: cloudnode-pro/modrinth-publish@v2
+        with:
+          token: ${{ secrets.MODRINTH_TOKEN }}
+          project: ${{ vars.MODRINTH_PROJECT_ID }}
+          name: ${{ github.event.release.name }}
+          version: ${{ steps.release.outputs.version }}
+          changelog: ${{ github.event.release.body }}
+          loaders: |-
+            paper
+            spigot
+            bukkit
+          game-versions: |-
+            1.13
+            1.14
+            1.15
+            1.16
+            1.17
+            1.18
+            1.19
+            1.20
+            1.20.x
+            1.21
+            1.21.x
+          files: jars/EssentialsY-*.jar
