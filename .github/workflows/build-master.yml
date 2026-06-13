@@ -54,38 +54,3 @@ jobs:
           name: EssentialsY
           path: jars/EssentialsY-*.jar
           archive: false
-
-      - name: Prepare Javadocs
-        run: |
-          mv Essentials/build/docs/javadoc/ javadocs/ || mkdir -p javadocs
-
-      - name: Archive Javadocs
-        uses: actions/upload-artifact@v7
-        with:
-          name: javadocs
-          path: javadocs/
-
-  publish-jd:
-    name: Publish Javadocs
-    needs: build
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/2.x')
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Download Javadocs
-        uses: actions/download-artifact@v8
-        with:
-          name: javadocs
-          path: javadocs/
-
-      - name: Deploy Javadocs
-        if: ${{ secrets.NETLIFY_JD_AUTH_TOKEN != '' }}
-        run: npx netlify-cli deploy --dir=javadocs/ --prod --message="EssentialsY GitHub Actions deploy"
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_JD_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_JD_SITE_ID }}
