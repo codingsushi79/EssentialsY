@@ -1,0 +1,102 @@
+# EssentialsY Economy configuration
+# Edit this file and run /essentials reload
+
+############################################################
+# +------------------------------------------------------+ #
+# |                       Economy                        | #
+# +------------------------------------------------------+ #
+############################################################
+
+# For more information, visit https://wiki.ess3.net/wiki/Essentials_Economy
+
+# You can control the values of items that are sold to the server by using the /setworth command and 'worth.yml'.
+
+# Defines the balance new players start with.
+starting-balance: 0
+
+# Defines the cost to use the given commands PER USE.
+# Some commands like /repair have sub-costs. Check the wiki for more information.
+command-costs:
+  # To make /example cost $1000 PER USE:
+  #example: 1000
+  # To make '/kit tools' cost $1500 PER USE:
+  #kit-tools: 1500
+
+# Set this to a currency symbol you want to use.
+# Remember, if you want to use special characters in this document, such as accented letters,
+# you MUST save the file as UTF-8, not ANSI.
+currency-symbol: '$'
+
+# Enable this to make the currency symbol appear at the end of the amount rather than at the start.
+# For example, the euro symbol typically appears after the current amount.
+currency-symbol-suffix: false
+
+# Set the maximum amount of money a player can have.
+# Note: Extremely large numbers may have unintended consequences.
+max-money: 10000000000000
+
+# Set the minimum amount of money a player can have (must be greater than the negative value of max-money).
+# Setting this to 0 will disable overdrafts/loans completely.
+# Players need 'essentials.eco.loan' permission to have a negative balance.
+min-money: -10000
+
+# Enable this to log all interactions with buy/sell/trade signs and the sell command.
+economy-log-enabled: false
+
+# Enable this to replace usernames with UUIDs in the trade.log file.
+# If this is false, usernames will be used instead of UUIDs.
+economy-log-uuids: false
+
+# Enable this to also log all transactions from other plugins through Vault.
+# This can cause the economy log to fill up quickly so it should only be enabled for testing purposes!
+economy-log-update-enabled: false
+
+# The minimum acceptable amount to be used in /pay.
+minimum-pay-amount: 0.001
+
+# Enable this to block players who try to /pay someone who is ignoring them.
+pay-excludes-ignore-list: false
+
+# Whether players with a balance of $0 or less should be shown in the balance top list.
+# Setting this to false will hide balances with $0 or less.
+# Note: After reloading the config, run '/baltop force' for changes to take effect.
+show-zero-baltop: true
+
+# Requirements that players must meet to have their name shown in the balance top list.
+# Playtime is measured in seconds.
+baltop-requirements:
+  minimum-balance: 0
+  minimum-playtime: 0
+
+# Limit the number of cached balance top entries.
+# Recommended for servers with a large number of players, as it reduces memory usage.
+# Set to -1 to disable the limit.
+baltop-entry-limit: -1
+
+# The format of currency, excluding symbols. For symbol configuration, see 'currency-symbol-format-locale' below.
+#
+# "#,##0.00" is how the majority of countries display currency.
+#currency-format: "#,##0.00"
+
+# Format currency symbols. Some locales use , and . interchangeably.
+# Certain formats may not display correctly in-game due to Minecraft font rendering issues.
+#
+# Example locales:
+#  - de-DE for 1.234,50
+#  - en-US for 1,234.50
+#  - fr-CH for 1'234,50
+#
+# Or see https://www.iban.com/country-codes for all Alpha-2 country codes.
+#currency-symbol-format-locale: en-US
+
+# Allow players to receive multipliers for items sold with /sell or the sell sign.
+# You can set the default multiplier using the 'default' rank below.
+#
+# To grant different multipliers to different people, you need to define a "multiplier rank" below.
+# Once created, give the matching permission: 'essentials.sell.multiplier.<multiplier_rank>'.
+# Note: The "multiplier ranks" defined below do not need to match your permissions plugin's group names.
+sell-multipliers:
+  default: 1.0
+  double: 2.0
+  triple: 3.0
+

@@ -1,0 +1,34 @@
+plugins {
+    id("essentials.base-conventions")
+    id("xyz.jpenilla.run-paper")
+}
+
+val moduleExtension = extensions.create<EssentialsModuleExtension>("essentialsModule", project)
+
+tasks {
+    runServer {
+        minecraftVersion(RUN_PAPER_MINECRAFT_VERSION)
+        runDirectory(rootProject.file("run"))
+        javaLauncher.set(javaToolchains.launcherFor(java.toolchain))
+        if (project.name != "EssentialsY") {
+            pluginJars.from(rootProject.project(":EssentialsY").the<EssentialsModuleExtension>().archiveFile)
+        }
+    }
+    jar {
+        moduleExtension.archiveFile.set(archiveFile)
+    }
+    val copyJar = register<FileCopyTask>("copyJar") {
+        fileToCopy.set(moduleExtension.archiveFile)
+        destination.set(rootProject.layout.projectDirectory.dir(provider { "jars" }).flatMap {
+            it.file(fileToCopy.map { file -> file.asFile.name })
+        })
+    }
+    build {
+        dependsOn(copyJar)
+    }
+
+    register<CommandDataTask>("commandData") {
+        destination.set(rootProject.layout.projectDirectory.dir("generated").file("${project.name}-commands.json"))
+        permissionDestination.set(rootProject.layout.projectDirectory.dir("generated").file("${project.name}-permissions.json"))
+    }
+}

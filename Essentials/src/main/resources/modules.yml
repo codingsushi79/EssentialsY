@@ -1,0 +1,37 @@
+# EssentialsY Module Configuration
+# Toggle feature modules on/off without separate plugin JARs.
+# All modules are disabled by default — set enabled: true for each module you need.
+# Changes take effect after /essentials reload (some modules require restart).
+
+modules:
+  chat:
+    enabled: false
+    description: "Chat formatting, local chat radius, and shout/question modes"
+
+  spawn:
+    enabled: false
+    description: "Spawn points, respawn handling, and new player setup"
+
+  protect:
+    enabled: false
+    description: "World protection, damage prevention, and mob spawn control"
+
+  antibuild:
+    enabled: false
+    description: "Build and item-use restrictions for players without essentials.build"
+
+  geoip:
+    enabled: false
+    description: "GeoIP country lookup on player join (requires GeoLite2 database)"
+
+  discord:
+    enabled: false
+    description: "Discord bridge integration (requires bot token in discord.yml)"
+
+  discordlink:
+    enabled: false
+    description: "Discord account linking (requires discord module)"
+
+  xmpp:
+    enabled: false
+    description: "XMPP messaging integration"

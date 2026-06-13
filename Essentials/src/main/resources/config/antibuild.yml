@@ -1,0 +1,47 @@
+# EssentialsY AntiBuild configuration
+
+protect:
+# +------------------------------------------------------+ #
+# |                 EssentialsY AntiBuild                | #
+# +------------------------------------------------------+ #
+############################################################
+
+  # You need to install the EssentialsY AntiBuild module for this section to work.
+  # See https://github.com/codingsushi79/EssentialsY/modules/overview and https://wiki.ess3.net/wiki/AntiBuild for more information.
+
+    # Should building be disabled for those without the 'essentials.build' permission?
+    # Setting this to false means Essentials AntiBuild will never prevent players from building.
+    build: true
+
+    # Should people without the 'essentials.build' permission be prevented from using items?
+    # Setting this to false means Essentials AntiBuild will never prevent players from using items.
+    use: true
+
+    # Should Essentials message people when they are not allowed to build?
+    warn-on-build-disallow: true
+
+  # For which block types would you like to be alerted?
+  # You can find a list of items at https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+  alert:
+    on-placement: LAVA,TNT,LAVA_BUCKET
+    on-use: LAVA_BUCKET
+    on-break:
+
+  blacklist:
+
+    # Which blocks should people be prevented from placing?
+    placement: LAVA,TNT,LAVA_BUCKET
+
+    # Which items should people be prevented from using?
+    usage: LAVA_BUCKET
+
+    # Which blocks should people be prevented from breaking?
+    break:
+
+    # Which blocks should not be moved by pistons?
+    piston:
+
+    # Which blocks should not be dispensed by dispensers?
+    dispenser:
+
+############################################################

@@ -1,0 +1,74 @@
+# EssentialsY Spawn configuration
+# Edit this file and run /essentials reload
+
+# +------------------------------------------------------+ #
+# |            EssentialsY Spawn + New Players           | #
+# +------------------------------------------------------+ #
+############################################################
+
+# You need to install the EssentialsY Spawn module for this section to work.
+# See https://github.com/codingsushi79/EssentialsY/modules/overview for more information.
+
+newbies:
+  # Should Essentials announce to the server when someone logs in for the first time?
+  # {DISPLAYNAME} will be replaced with the player name.
+  # Set to '' to disable.
+  #announce-format: ''
+  announce-format: '&dWelcome {DISPLAYNAME}&d to the server!'
+
+  # When players spawn for the first time, which spawnpoint should be used?
+  # Set to 'none' to use the spawnpoint of the world.
+  # Different spawn names can be set using '/setspawn <group>'.
+  spawnpoint: newbies
+
+  # Should players receive items on their first join?
+  # This kit will be given regardless of cost and permissions and won't trigger any kit delay (cooldown).
+  # Set to '' to disable.
+  #kit: ''
+  kit: tools
+
+# What priority should Essentials use for handling respawns?
+# Set this to 'none' if you want vanilla respawning behavior.
+# Set this to 'lowest' if you want world plugins to handle the respawning.
+# Set this to 'high' if you want Essentials Spawn to handle the respawning.
+# Set this to 'highest' if you want to force Essentials Spawn to handle the respawning.
+# Note: Changes will not apply until after the server is restarted.
+respawn-listener-priority: high
+
+# What priority should Essentials use for handling spawning on joining the server?
+# See 'respawn-listener-priority' above for possible values.
+# Note: Changing this may impact or break 'spawn-on-join' functionality below.
+# Note: Changes will not apply until after the server is restarted.
+spawn-join-listener-priority: high
+
+# When players die, should they respawn at their first home or bed instead of the spawnpoint?
+respawn-at-home: false
+
+# When players die, should they respawn at their bed instead of their first home or the spawnpoint?
+# The 'respawn-at-home' setting above must also be true for this to take effect.
+respawn-at-home-bed: true
+
+# When players die, should Essentials respect their respawn anchors?
+respawn-at-anchor: false
+
+# If configured, players will spawn at a random location instead of their spawnpoint.
+# This will override the newbies spawnpoint set above.
+#
+# The location must first be set using the /settpr command or in 'tpr.yml'.
+# After a tpr location is created, set the world name (or the name defined in 'tpr.yml') below.
+random-spawn-location: "none"
+
+# If configured, players will respawn at the random respawn location when they die.
+# See 'random-spawn-location' above for additional location information.
+random-respawn-location: "none"
+
+# Teleport all joining players to their spawnpoint.
+spawn-on-join: false
+# The following value of 'guests' states that all players in the 'guests' group will be teleported to spawn when joining.
+#spawn-on-join: guests
+# The following list value states that all players in the 'guests' or 'admin' groups will be teleported to spawn when joining.
+#spawn-on-join:
+#  - guests
+#  - admin
+
+# End of file <-- No seriously, you're done with configuration.

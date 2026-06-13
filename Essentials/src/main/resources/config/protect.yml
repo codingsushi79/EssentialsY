@@ -1,0 +1,152 @@
+# +------------------------------------------------------+ #
+# |                  EssentialsY Protect                 | #
+# +------------------------------------------------------+ #
+############################################################
+
+# You need to install the EssentialsY Protect module for this section to work.
+# See https://github.com/codingsushi79/EssentialsY/modules/overview for more information.
+
+protect:
+
+  # General physics/behavior modifications. Set these to true to disable behaviors.
+  prevent:
+    lava-flow: false
+    water-flow: false
+    water-bucket-flow: false
+    fire-spread: true
+    lava-fire-spread: true
+    lava-itemdamage: false
+    flint-fire: false
+    lightning-fire-spread: true
+    portal-creation: false
+    tnt-explosion: false
+    tnt-playerdamage: false
+    tnt-itemdamage: false
+    tnt-minecart-explosion: false
+    tnt-minecart-playerdamage: false
+    tnt-minecart-itemdamage: false
+    fireball-explosion: false
+    fireball-fire: false
+    fireball-playerdamage: false
+    fireball-itemdamage: false
+    windcharge-explosion: false
+    witherskull-explosion: false
+    witherskull-playerdamage: false
+    witherskull-itemdamage: false
+    wither-spawnexplosion: false
+    wither-blockreplace: false
+    creeper-explosion: false
+    creeper-playerdamage: false
+    creeper-itemdamage: false
+    creeper-blockdamage: false
+    ender-crystal-explosion: false
+    enderdragon-blockdamage: true
+    enderman-pickup: false
+    villager-death: false
+    bed-explosion: false
+    respawn-anchor-explosion: false
+    # Prevent monsters from following players.
+    # The permission 'essentials.protect.entitytarget.bypass' disables this.
+    entitytarget: false
+    # Prevent zombies from breaking down doors.
+    zombie-door-break: false
+    # Prevent ravagers from stealing blocks.
+    ravager-thief: false
+    # Prevent sheep from turning grass into dirt.
+    sheep-eat-grass: false
+    transformation:
+      # Prevent creepers from becoming charged when struck by lightning.
+      charged-creeper: false
+      # Prevent villagers from becoming zombie villagers.
+      zombie-villager: false
+      # Prevent zombie villagers from being cured.
+      villager: false
+      # Prevent villagers from becoming witches when struck by lightning.
+      witch: false
+      # Prevent pigs from becoming zombified piglins when struck by lightning.
+      zombie-pigman: false
+      # Prevent zombies from turning into drowneds, and husks from turning into zombies.
+      drowned: false
+      # Prevent mooshrooms from changing color when struck by lightning.
+      mooshroom: false
+    # Prevent the spawning of creatures. If a creature is missing, you can add it following the format below.
+    spawn:
+      creeper: false
+      skeleton: false
+      spider: false
+      giant: false
+      zombie: false
+      slime: false
+      ghast: false
+      pig_zombie: false
+      enderman: false
+      cave_spider: false
+      silverfish: false
+      blaze: false
+      magma_cube: false
+      ender_dragon: false
+      pig: false
+      sheep: false
+      cow: false
+      chicken: false
+      squid: false
+      wolf: false
+      mushroom_cow: false
+      snowman: false
+      ocelot: false
+      iron_golem: false
+      villager: false
+      wither: false
+      bat: false
+      witch: false
+      horse: false
+      phantom: false
+
+  # The maximum height a creeper can explode. -1 allows them to explode everywhere.
+  # Set 'creeper-explosion' above to true if you want to disable creeper explosions completely.
+  creeper:
+    max-height: -1
+
+  # Disable various default physics/behaviors.
+  disable:
+    # Should fall damage be disabled?
+    fall: false
+
+    # Should PvP be disabled?
+    # Players with the 'essentials.protect.pvp' permission will still be able to attack each other if this is set to true.
+    # However, they will be unable to attack players without the permission node.
+    pvp: false
+
+    # Should drowning damage be disabled?
+    drown: false
+
+    # Should suffocation in blocks be disabled?
+    suffocate: false
+
+    # Should damage by lava be disabled?
+    # Items that fall into lava will still burn to a crisp. ;)
+    lavadmg: false
+
+    # Should projectile damage, such as from arrows, be disabled?
+    projectiles: false
+
+    # Should contact damage be disabled?
+    # This includes touching cacti, dripstone, berry bushes, etc.
+    contactdmg: false
+
+    # Burn, baby, burn! Should fire damage be disabled?
+    firedmg: false
+
+    # Should the damage from being hit by lightning be disabled?
+    lightning: false
+
+    # Should wither damage be disabled?
+    wither: false
+
+    # Should these types of weather be disabled?
+    weather:
+      storm: false
+      thunder: false
+      lightning: false
+
+############################################################

@@ -1,0 +1,91 @@
+############################################################
+# +------------------------------------------------------+ #
+# |                   EssentialsY Chat                   | #
+# +------------------------------------------------------+ #
+############################################################
+
+# You need to install the EssentialsY Chat module for this section to work.
+# See https://github.com/codingsushi79/EssentialsY/modules/overview for more information.
+
+chat:
+
+  # If Essentials Chat is installed, this sets how many blocks a player's chat will travel. Set to 0 for global chat.
+  # Players with 'essentials.chat.spy' will see everything, regardless of this setting.
+  # Players with 'essentials.chat.shout' can override this by prefixing their message with an exclamation mark (!).
+  # Players with 'essentials.chat.question' can override this by prefixing their message with a question mark (?).
+  # You can add command costs for shout/question by adding 'chat-shout' and 'chat-question' to the 'command-costs' section above.
+  radius: 0
+
+  # Chat formatting can be configured in two ways:
+  #  - A standard format for all chat ('format' section)
+  #  - Group-specific chat formats for extra variation ('group-formats' section)
+  #
+  # You can use permissions to control whether players can use formatting codes in their chat messages.
+  # See https://github.com/codingsushi79/EssentialsY/commands/permissions for more information.
+  #
+  # You can also specify a sub-format for each chat type.
+  # For more information on chat formatting, visit the wiki: https://wiki.ess3.net/wiki/Chat_Formatting#Chat_Formatting
+  #
+  # Available placeholders:
+  # {MESSAGE} - The content of the chat message.
+  # {USERNAME} - The sender's username.
+  # {DISPLAYNAME} - The sender's display name.
+  # {NICKNAME} - The sender's Essentials nickname. If the sender has no nickname, the username is shown.
+  # {PREFIX} - The sender's prefix, supplied by a permissions plugin.
+  # {SUFFIX} - The sender's suffix, supplied by a permissions plugin.
+  # {GROUP} - The sender's primary group name, supplied by a permissions plugin.
+  # {WORLD} - The world alias of the sender's current world. See the world-aliases section below for details.
+  # {WORLDNAME} - The full name of the sender's current world.
+  # {SHORTWORLDNAME} - The first character of the sender's current world.
+  # {TEAMNAME} - The sender's scoreboard team name.
+  # {TEAMPREFIX} - The sender's scoreboard team prefix.
+  # {TEAMSUFFIX} - The sender's scoreboard team suffix.
+  #
+  # Note: The {DISPLAYNAME} placeholder includes {PREFIX} and {SUFFIX} by default.
+  # Using these together may result in double prefixes/suffixes in chat.
+
+  format: '<{DISPLAYNAME}> {MESSAGE}'
+  #format: '&7[{GROUP}]&r {DISPLAYNAME}&7:&r {MESSAGE}'
+  #format: '&7{PREFIX}&r {NICKNAME}&r &7{SUFFIX}&r: {MESSAGE}'
+
+  # You can also specify a format for each type of chat.
+  #format:
+  #  normal: '{WORLDNAME} {DISPLAYNAME}&7:&r {MESSAGE}'
+  #  question: '{WORLDNAME} &4{DISPLAYNAME}&7:&r {MESSAGE}'
+  #  shout: '{WORLDNAME} &c[{GROUP}]&r &4{DISPLAYNAME}&7:&c {MESSAGE}'
+
+  # You can also specify a format for each group.
+  # If using group formats, remove the # to activate the setting.
+  # Note: Group names are case-sensitive, so you must match them up with your permissions plugin.
+  # Note: If a LuckPerms group display name (alias) is set, you must use it instead of the original group name.
+  group-formats:
+    #default: '{WORLDNAME} {DISPLAYNAME}&7:&r {MESSAGE}'
+    #admins: '{WORLDNAME} &c[{GROUP}]&r {DISPLAYNAME}&7:&c {MESSAGE}'
+
+    # You can also specify a format for each type of chat for each group.
+    #admins:
+    #  question: '{WORLDNAME} &4{DISPLAYNAME}&7:&r {MESSAGE}'
+    #  shout: '{WORLDNAME} &c[{GROUP}]&r &4{DISPLAYNAME}&7:&c {MESSAGE}'
+
+  # World aliases allow you to replace the world name with something different in the chat format.
+  # If using world aliases, remove the # to activate the setting.
+  world-aliases:
+    #plots: "&dP&r"
+    #creative: "&eC&r"
+
+  # Whether players should be placed into shout mode by default.
+  shout-default: false
+
+  # Whether a player's shout mode should persist across restarts.
+  persist-shout: false
+
+  # Whether chat questions should be enabled.
+  question-enabled: true
+
+  # Whether Essentials should use Paper's modern chat event system in 1.16.5+.
+  # This is required for modern chat features such as hover events and click events.
+  # If you're experiencing issues with other plugins that use the chat event system, you can disable this.
+  # You must restart your server after changing this setting.
+  paper-chat-events: true
+
+############################################################

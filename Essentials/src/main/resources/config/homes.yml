@@ -1,0 +1,47 @@
+# EssentialsY Homes configuration
+# Edit this file and run /essentials reload
+
+# +------------------------------------------------------+ #
+# |                        Homes                         | #
+# +------------------------------------------------------+ #
+############################################################
+
+# Allows people to set their bed during the day.
+# This setting has no effect in Minecraft 1.15+, as Minecraft will always allow the player to set their bed location during the day.
+update-bed-at-daytime: true
+
+# Set to true to enable per-world permissions for using homes to teleport between worlds.
+# This applies to the /home command only.
+# Give someone permission to teleport to a world with 'essentials.worlds.<worldname>'.
+world-home-permissions: false
+
+# Allow players to have multiple homes.
+# Players need 'essentials.sethome.multiple' before they can have more than 1 home.
+# You can set the default number of multiple homes using the 'default' rank below.
+# To remove the home limit entirely, give people 'essentials.sethome.multiple.unlimited'.
+#
+# To grant different home amounts to different people, you need to define a "home rank" below.
+# Once created, give the matching permission: 'essentials.sethome.multiple.<home_rank>'.
+# Note: The "home ranks" defined below do not need to match your permissions plugin's group names.
+#
+# In this example, someone with 'essentials.sethome.multiple' and 'essentials.sethome.multiple.vip' will have 5 homes.
+# Remember, they must have BOTH permission nodes in order to be able to set multiple homes.
+# For more information, visit https://wiki.ess3.net/wiki/Multihome
+sethome-multiple:
+  default: 3
+  vip: 5
+  staff: 10
+
+# Controls whether players need the permission 'essentials.home.compass' in order to point
+# the player's compass toward their first home.
+# Leaving this as false will retain Essentials' original behavior, which is to always
+# change the compass' direction to point toward the player's first home.
+compass-towards-home-perm: false
+
+# If no home is set, would you like to send the player to spawn?
+# If set to false, players will not be teleported when they run /home without first setting a home.
+spawn-if-no-home: true
+
+# Should players be asked to provide confirmation for homes they attempt to overwrite?
+confirm-home-overwrite: false
+

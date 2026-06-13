@@ -1,0 +1,15 @@
+# EssentialsY GeoIP Configuration
+# Requires the geoip module to be enabled in modules.yml
+
+database:
+  # Show city and region in addition to country
+  show-cities: false
+
+  # URL to download GeoLite2 database (requires MaxMind license key)
+  # download-url: "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country-CSV&license_key=YOUR_KEY&suffix=tar.gz"
+
+  # Your MaxMind license key for automatic database updates
+  # license-key: "YOUR_LICENSE_KEY"
+
+  # How often to check for database updates (in hours)
+  update-interval: 72

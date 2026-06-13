@@ -1,0 +1,18 @@
+# EssentialsY Help configuration
+# Edit this file and run /essentials reload
+
+############################################################
+# +------------------------------------------------------+ #
+# |                         Help                         | #
+# +------------------------------------------------------+ #
+############################################################
+
+# Show other plugins' commands in the Essentials help list.
+non-ess-in-help: true
+
+# Hide plugins that players do not have permission to use.
+# You can override this by adding the 'essentials.help.<plugin>' permission to a player or group.
+# Players with 'essentials.*' or '*' will see all help regardless.
+# You can also use negative permissions to remove access to a specific plugin's help if this is enabled.
+hide-permissionless-help: true
+

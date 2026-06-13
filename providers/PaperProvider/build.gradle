@@ -1,0 +1,24 @@
+plugins {
+    id("essentials.base-conventions")
+    id("com.gradleup.shadow")
+}
+
+java {
+    disableAutoTargetJvm()
+}
+
+dependencies {
+    implementation(project(':providers:BaseProviders')) {
+        exclude(module: 'spigot-api')
+    }
+    compileOnly 'io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT'
+}
+
+essentials {
+    injectBukkitApi.set(false)
+    injectBstats.set(false)
+}
+
+shadowJar {
+    relocate 'net.kyori.adventure', 'net.essentialsx.temp.adventure'
+}

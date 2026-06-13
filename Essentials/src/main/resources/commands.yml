@@ -1,0 +1,142 @@
+# EssentialsY Command Configuration
+# Fine-grained control over which commands are available.
+#
+# Three ways to disable commands:
+#   1. List individual commands under 'disabled'
+#   2. Set a category's 'enabled' to false to disable all commands in that category
+#   3. Use core.yml 'disabled-commands' for legacy compatibility
+#
+# Changes take effect after /essentials reload
+
+# Individual commands to disable (case-insensitive)
+disabled:
+  # - god
+  # - fly
+  # - antioch
+
+# Disable entire command categories at once
+categories:
+  teleport:
+    enabled: true
+    commands:
+      - home
+      - sethome
+      - delhome
+      - homes
+      - spawn
+      - setspawn
+      - tp
+      - tpa
+      - tpaccept
+      - tpdeny
+      - tpahere
+      - tpall
+      - tpauto
+      - tphere
+      - tpohere
+      - tppos
+      - warp
+      - setwarp
+      - delwarp
+      - warps
+      - back
+      - jump
+      - top
+      - bottom
+      - rtp
+
+  economy:
+    enabled: true
+    commands:
+      - balance
+      - bal
+      - balancetop
+      - baltop
+      - pay
+      - eco
+      - sell
+      - worth
+      - setworth
+      - kit
+      - kits
+      - createkit
+      - delkit
+
+  moderation:
+    enabled: true
+    commands:
+      - ban
+      - tempban
+      - unban
+      - kick
+      - kickall
+      - mute
+      - unmute
+      - jail
+      - unjail
+      - setjail
+      - deljail
+      - jails
+      - jailedplayers
+      - socialspy
+      - vanish
+
+  fun:
+    enabled: true
+    commands:
+      - burn
+      - fireball
+      - firework
+      - lightning
+      - beezooka
+      - kittycannon
+      - antioch
+      - bigtree
+      - ice
+      - spawnmob
+      - suicide
+
+  utility:
+    enabled: true
+    commands:
+      - heal
+      - feed
+      - fly
+      - god
+      - speed
+      - gamemode
+      - gm
+      - hat
+      - repair
+      - enchant
+      - give
+      - item
+      - clearinventory
+      - clear
+      - exp
+      - setxp
+      - getpos
+      - compass
+      - depth
+      - near
+      - list
+      - who
+      - afk
+      - nick
+      - realname
+      - ignore
+      - unignore
+      - msg
+      - mail
+      - me
+      - broadcast
+      - rules
+      - motd
+      - help
+      - info
+
+  signs:
+    enabled: true
+    commands:
+      - edsign
+      - essentials
