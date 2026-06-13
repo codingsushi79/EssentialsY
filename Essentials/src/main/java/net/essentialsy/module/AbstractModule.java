@@ -4,7 +4,6 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.IEssentialsModule;
 
 import java.util.Locale;
-import java.util.Set;
 
 public abstract class AbstractModule implements EssentialsYModule {
     protected final Essentials ess;

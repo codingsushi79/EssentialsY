@@ -1,13 +1,8 @@
 package com.earth2me.essentials.protect;
 
 import com.earth2me.essentials.IConf;
-import com.earth2me.essentials.adventure.AdventureUtil;
 import net.ess3.api.IEssentials;
 import org.bukkit.plugin.Plugin;
-
-import java.util.logging.Level;
-
-import static com.earth2me.essentials.I18n.tlLiteral;
 
 class EssentialsConnect {
     private final IEssentials ess;

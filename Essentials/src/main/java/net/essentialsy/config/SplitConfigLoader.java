@@ -1,7 +1,6 @@
 package net.essentialsy.config;
 
 import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.config.EssentialsConfiguration;
 import net.essentialsy.module.ModuleType;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
@@ -24,14 +23,7 @@ import java.util.logging.Level;
  * into a single virtual configuration node for backward-compatible access.
  */
 public class SplitConfigLoader {
-    private static final String[] CORE_CONFIG_FILES = {
-            "core.yml",
-            "homes.yml",
-            "economy.yml",
-            "help.yml",
-            "chat.yml",
-            "protect.yml",
-    };
+    private static final String[] CORE_CONFIG_FILES = {"core.yml", "homes.yml", "economy.yml", "help.yml", "chat.yml", "protect.yml"};
 
     private static final Map<String, ModuleType> MODULE_CONFIG_FILES;
 
