@@ -40,6 +40,22 @@ jobs:
           chmod +x gradlew
           ./gradlew :EssentialsY:build -x test --stacktrace
 
+      - name: Resolve plugin jar
+        id: jar
+        run: |
+          shopt -s nullglob
+          jars=(jars/EssentialsY-*.jar)
+          if [ ${#jars[@]} -eq 0 ]; then
+            echo "::error::No EssentialsY jar found in jars/"
+            ls -la jars/ || true
+            exit 1
+          fi
+          if [ ${#jars[@]} -gt 1 ]; then
+            echo "::error::Multiple EssentialsY jars found: ${jars[*]}"
+            exit 1
+          fi
+          echo "path=${jars[0]}" >> "$GITHUB_OUTPUT"
+
       - name: Resolve version
         id: version
         env:
@@ -88,14 +104,14 @@ jobs:
           body: ${{ steps.version.outputs.changelog }}
           prerelease: ${{ steps.version.outputs.prerelease }}
           generate_release_notes: true
-          files: jars/EssentialsY-*.jar
+          files: ${{ steps.jar.outputs.path }}
 
       - name: Upload jar to existing GitHub release
         if: github.event_name == 'release'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.release.tag_name }}
-          files: jars/EssentialsY-*.jar
+          files: ${{ steps.jar.outputs.path }}
 
       - name: Archive plugin jar
         uses: actions/upload-artifact@v7
@@ -107,7 +123,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: EssentialsY
-          path: jars/EssentialsY-*.jar
+          path: ${{ steps.jar.outputs.path }}
           archive: false
 
       - name: Publish to Modrinth
@@ -135,4 +151,4 @@ jobs:
             1.20.x
             1.21
             1.21.x
-          files: jars/EssentialsY-*.jar
+          files: ${{ steps.jar.outputs.path }}
