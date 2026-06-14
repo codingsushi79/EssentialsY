@@ -1,0 +1,118 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Release version (e.g. 1.0.0)
+        required: true
+      changelog:
+        description: Changelog (markdown)
+        required: false
+        default: ''
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
+
+      - name: Set version metadata
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            VERSION="${{ github.event.release.tag_name }}"
+            RELEASE_TAG="${{ github.event.release.tag_name }}"
+          else
+            VERSION="${{ github.event.inputs.version }}"
+            RELEASE_TAG="v${{ github.event.inputs.version }}"
+          fi
+          VERSION="${VERSION#v}"
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "RELEASE_TAG=$RELEASE_TAG" >> "$GITHUB_ENV"
+          echo "MODRINTH_NAME=v${VERSION}" >> "$GITHUB_ENV"
+
+      - name: Set changelog
+        env:
+          RELEASE_BODY: ${{ github.event.release.body }}
+          MANUAL_CHANGELOG: ${{ github.event.inputs.changelog }}
+        run: |
+          {
+            echo 'CHANGELOG<<EOF'
+            if [ "${{ github.event_name }}" = "release" ]; then
+              printf '%s\n' "$RELEASE_BODY"
+            else
+              printf '%s\n' "$MANUAL_CHANGELOG"
+            fi
+            echo 'EOF'
+          } >> "$GITHUB_ENV"
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build with Gradle
+        run: |
+          chmod +x gradlew
+          ./gradlew :EssentialsY:build -x test --stacktrace -PreleaseVersion="$VERSION"
+
+      - name: Resolve plugin jar
+        id: jar
+        run: |
+          JAR_PATH="jars/EssentialsY-${VERSION}.jar"
+          if [ ! -f "$JAR_PATH" ]; then
+            echo "::error::Expected jar not found: $JAR_PATH"
+            ls -la jars/ || true
+            exit 1
+          fi
+          echo "path=${JAR_PATH}" >> "$GITHUB_OUTPUT"
+
+      - name: Resolve Modrinth project
+        id: modrinth
+        run: |
+          PROJECT_ID=$(curl -fsSL "https://api.modrinth.com/v2/project/essentials_y/check" | python3 -c "import json,sys; print(json.load(sys.stdin)['id'])")
+          echo "project-id=${PROJECT_ID}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish to Modrinth
+        uses: cloudnode-pro/modrinth-publish@v2
+        with:
+          token: ${{ secrets.MODRINTH_TOKEN }}
+          project: ${{ steps.modrinth.outputs.project-id }}
+          name: ${{ env.MODRINTH_NAME }}
+          version: ${{ env.VERSION }}
+          changelog: ${{ env.CHANGELOG }}
+          channel: release
+          loaders: |-
+            paper
+            spigot
+            bukkit
+          game-versions: |-
+            1.13
+            1.14
+            1.15
+            1.16
+            1.17
+            1.18
+            1.19
+            1.20.x
+            1.21.x
+          files: ${{ steps.jar.outputs.path }}
+
+      - name: Upload jar to GitHub Release
+        if: github.event_name == 'release'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload "$RELEASE_TAG" "${{ steps.jar.outputs.path }}" --clobber
