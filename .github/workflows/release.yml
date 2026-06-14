@@ -1,8 +1,6 @@
 name: Release
 
 on:
-  release:
-    types: [published]
   workflow_dispatch:
     inputs:
       version:
@@ -24,17 +22,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
 
       - name: Set version metadata
         run: |
-          if [ "${{ github.event_name }}" = "release" ]; then
-            VERSION="${{ github.event.release.tag_name }}"
-            RELEASE_TAG="${{ github.event.release.tag_name }}"
-          else
-            VERSION="${{ github.event.inputs.version }}"
-            RELEASE_TAG="v${{ github.event.inputs.version }}"
-          fi
+          VERSION="${{ github.event.inputs.version }}"
+          RELEASE_TAG="v${{ github.event.inputs.version }}"
           VERSION="${VERSION#v}"
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
           echo "RELEASE_TAG=$RELEASE_TAG" >> "$GITHUB_ENV"
@@ -42,16 +34,11 @@ jobs:
 
       - name: Set changelog
         env:
-          RELEASE_BODY: ${{ github.event.release.body }}
           MANUAL_CHANGELOG: ${{ github.event.inputs.changelog }}
         run: |
           {
             echo 'CHANGELOG<<EOF'
-            if [ "${{ github.event_name }}" = "release" ]; then
-              printf '%s\n' "$RELEASE_BODY"
-            else
-              printf '%s\n' "$MANUAL_CHANGELOG"
-            fi
+            printf '%s\n' "$MANUAL_CHANGELOG"
             echo 'EOF'
           } >> "$GITHUB_ENV"
 
@@ -110,9 +97,3 @@ jobs:
             1.20.x
             1.21.x
           files: ${{ steps.jar.outputs.path }}
-
-      - name: Upload jar to GitHub Release
-        if: github.event_name == 'release'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload "$RELEASE_TAG" "${{ steps.jar.outputs.path }}" --clobber
