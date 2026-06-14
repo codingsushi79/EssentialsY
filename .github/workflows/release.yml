@@ -25,12 +25,16 @@ jobs:
 
       - name: Set version metadata
         run: |
+          GAME_VERSION_RANGE=1.21.x
           VERSION="${{ github.event.inputs.version }}"
           RELEASE_TAG="v${{ github.event.inputs.version }}"
           VERSION="${VERSION#v}"
+          MODRINTH_VERSION="${VERSION}+${GAME_VERSION_RANGE}"
+          MODRINTH_NAME="EssentialsY [v${VERSION}+${GAME_VERSION_RANGE}]"
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
           echo "RELEASE_TAG=$RELEASE_TAG" >> "$GITHUB_ENV"
-          echo "MODRINTH_NAME=v${VERSION}" >> "$GITHUB_ENV"
+          echo "MODRINTH_VERSION=$MODRINTH_VERSION" >> "$GITHUB_ENV"
+          echo "MODRINTH_NAME=$MODRINTH_NAME" >> "$GITHUB_ENV"
 
       - name: Set changelog
         env:
@@ -79,7 +83,7 @@ jobs:
           token: ${{ secrets.MODRINTH_TOKEN }}
           project: ${{ steps.modrinth.outputs.project-id }}
           name: ${{ env.MODRINTH_NAME }}
-          version: ${{ env.VERSION }}
+          version: ${{ env.MODRINTH_VERSION }}
           changelog: ${{ env.CHANGELOG }}
           channel: release
           loaders: |-
