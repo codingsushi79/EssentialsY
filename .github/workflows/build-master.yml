@@ -114,11 +114,11 @@ jobs:
         uses: cloudnode-pro/modrinth-publish@v2
         with:
           token: ${{ secrets.MODRINTH_TOKEN }}
-          project: ${{ vars.MODRINTH_PROJECT_ID }}
+          project: essentials_y
           name: ${{ steps.version.outputs.name }}
           version: ${{ steps.version.outputs.version }}
           changelog: ${{ steps.version.outputs.changelog }}
-          status: ${{ steps.version.outputs.channel }}
+          channel: ${{ steps.version.outputs.channel }}
           loaders: |-
             paper
             spigot
